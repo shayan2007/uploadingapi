@@ -1,4 +1,3 @@
-# views.py
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -13,8 +12,7 @@ class FileUploadView(APIView):
             return Response({'error': 'No files uploaded'}, status=400)
 
         try:
-            save_dir = "C:\\Users\\Shayan'\\uploadingapi\\myproject\\saved_files"
-
+            save_dir = r"C:\Users\Shayan'\\uploadingapi\myproject\saved_files"
             for file_obj in file_objs:
                 file_path = save_dir + file_obj.name
 
