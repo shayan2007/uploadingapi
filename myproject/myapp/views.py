@@ -13,7 +13,7 @@ class FileUploadView(APIView):
 
         try:
             # Define the directory to save the file
-            save_dir = 'path/to/save/directory/'
+            save_dir = 'myproject/saved_files/'
 
             # Construct the file path
             file_path = save_dir + file_obj.name
