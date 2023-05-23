@@ -1,20 +1,20 @@
-from django.core.files.storage import FileSystemStorage
+from django.views import View
 from django.shortcuts import render
-from rest_framework.response import Response
-from rest_framework.views import APIView
 
+class FileUploadView(View):
+    template_name = 'upload_form.html'
 
-class FileUploadView(APIView):
-    def get(self, request, format=None):
-        return render(request, 'file_upload/upload.html')
+    def get(self, request, *args, **kwargs):
+        # Handle GET request, render the upload form template
+        return render(request, self.template_name)
 
-    def post(self, request):
-        file = request.FILES['file']
-        file_storage = FileSystemStorage()
-        filename = file_storage.save(file.name, file)
-        file_url = file_storage.url(filename)
+    def post(self, request, *args, **kwargs):
+        files = request.FILES.getlist('files')
 
-        # Rest of your code
+        for file in files:
+            # Save each file to the media folder or perform any other desired operation
+            with open('media/' + file.name, 'wb+') as destination:
+                for chunk in file.chunks():
+                    destination.write(chunk)
 
-        return Response({'file_url': file_url})
-
+        return JsonResponse({'success': True})
