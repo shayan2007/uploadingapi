@@ -1,9 +1,11 @@
-from rest_framework import status
-from rest_framework.response import Response
+from django.shortcuts import render
 from rest_framework.views import APIView
 from .serializers import UploadedFileSerializer
 
 class FileUploadView(APIView):
+    def get(self, request, format=None):
+        return render(request, 'file_upload/upload.html')
+
     def post(self, request, format=None):
         serializer = UploadedFileSerializer(data=request.data, many=True)
         if serializer.is_valid():
